@@ -28,7 +28,11 @@ public class Server {
                 while(true) {
                     try {
                         socket = serverSocket.accept(); // Lyssna efter anslutande klient
+
+                        // TODO : ClientHandler behöver sparas i hashmapen
                         new ClientHandler(socket).start();
+
+
                     } catch(IOException e) {
                         System.err.println(e);
                         if(socket!=null)
@@ -42,7 +46,7 @@ public class Server {
         }
     }
 
-    private class ClientHandler extends Thread {
+    public class ClientHandler extends Thread {
         private Socket socket;
 
         Message recievedMessage;
@@ -60,13 +64,18 @@ public class Server {
             {
                 while(true) {
 
-                    recievedMessage = (Message) ois.readObject();
-                    if(recievedMessage != null) {
-                        System.out.println("Server recieved message at: " + dtf.format(now));
-                    }
+//                    recievedMessage = (Message) ois.readObject();
+//                    if(recievedMessage != null) {
+//                        System.out.println("Server recieved message at: " + dtf.format(now));
+//                    }
+//
+//                    oos.writeObject(recievedMessage);
+//                    oos.flush();
 
-                    oos.writeObject(recievedMessage);
-                    oos.flush();
+                    Object objRecieved = ois.readObject();
+                    if(objRecieved instanceof User) {
+                        globalClientsObj.put((User)objRecieved, this);
+                    }
 
                 }
             }

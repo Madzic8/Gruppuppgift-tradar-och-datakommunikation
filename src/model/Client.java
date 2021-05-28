@@ -33,23 +33,36 @@ public class Client extends Thread {
             Message messageTest = new Message(user, "Hello, It's me");
             messagesBuffer.put(messageTest);
 
-            try {
-                while(true) {
 
-                    Message message = messagesBuffer.get();
-                    if(message != null) {
-                        System.out.println("Client sent: " + message.toString());
-                        oos.writeObject(message);
-                        oos.flush();
-                    }
+//            try {
+//                while(true) {
+//
+//                    Message message = messagesBuffer.get();
+//                    if(message != null) {
+//                        System.out.println("Client sent: " + message.toString());
+//                        oos.writeObject(message);
+//                        oos.flush();
+//                    }
+//
+//                    Message messageRecieved = (Message) ois.readObject();
+//                    System.out.println("Client recieved: " + messageRecieved.toString());
+//
+//                }
+//            }catch(IOException | InterruptedException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
 
-                    Message messageRecieved = (Message) ois.readObject();
-                    System.out.println("Client recieved: " + messageRecieved.toString());
 
-                }
-            }catch(IOException | InterruptedException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
+
+    public void sendUserToServer(User user) {
+        try {
+            oos.writeObject(user);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -26,24 +26,25 @@ public class Controller {
                 String username = clientGUI.getUsername();
                 ImageIcon imageIcon = clientGUI.getImageIcon();
                 User newUser = new User(username, imageIcon); // skapar ny User-instans
+
                 Client newClient = new Client("127.0.0.1", 2343); // skapar ny Client-instans
+                newClient.sendUserToServer(newUser);
 
                 // FIXME : test
-                localClientsObj.put(newUser, newClient); // lagra nya värden i HashMap:en (lokal nivå)
-
-                User[] existingUsers = new User[5];
-                int index = 0;
-                for ( User key : localClientsObj.getHashMapList().keySet() ) {
-                    existingUsers[index] = key;
-                    index++;
-                }
+//                User[] existingUsers = new User[5];
+//                int index = 0;
+//                for ( User key : localClientsObj.getHashMapList().keySet() ) {
+//                    existingUsers[index] = key;
+//                    index++;
+//                }
                 ///////////////
 
                 clientMainGUI = new ClientMainGUI(this); // öppna klient fönstret
-                clientMainGUI.updateOnlineJList(existingUsers); // updatera onlineUsers-list in client main view
+                // clientMainGUI.updateOnlineJList(existingUsers); // updatera onlineUsers-list in client main view
                 clientGUI.closeClientConnectionWindow();
 
                 break;
+
             case Send:
 
                 // TODO : testa att skicka något till alla klienter (på global nivå)
